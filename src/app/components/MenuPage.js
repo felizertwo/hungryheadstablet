@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Logo from "../../images/Logo.png";
+import Logo from "../../images/logo.png";
 import ColdDrinksIcon from "../../images/ColdDrinks.png";
 import HotDrinksIcon from "../../images/HotDrinks.png";
 import SnacksIcon from "../../images/Snacks.png";
