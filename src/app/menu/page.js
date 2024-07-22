@@ -1,11 +1,13 @@
+'use client'
+
 import React from "react";
 import styled from "styled-components";
-import Logo from "../images/logo.png";
-import ColdDrinksIcon from "../images/ColdDrinks.png";
-import HotDrinksIcon from "../images/HotDrinks.png";
-import SnacksIcon from "../images/Snacks.png";
-import TabbedPanel from "../componentTabbedPanel";
-import MenuContent from "./MenuContent";
+import Logo from "../../images/logo.png";
+import ColdDrinksIcon from "../../images/ColdDrinks.png";
+import HotDrinksIcon from "../../images/HotDrinks.png";
+import SnacksIcon from "../../images/Snacks.png";
+import TabbedPanel from "../components/TabbedPanel";
+import MenuContent from "../components/MenuContent";
 
 const MenuWrapper = styled.div`
   height: 100%;
