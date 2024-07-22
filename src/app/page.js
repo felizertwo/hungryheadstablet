@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import StarterPage from "./components/StarterPage";
+import TypePage from "./components/TypePage";
 import MenuPage from "./components/MenuPage";
 
 const Container = styled.div`
@@ -16,7 +17,7 @@ const SlideWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 200%; // Since there are 2 pages, set this to 200%
+  width: 300%; // Since there are 2 pages, set this to 200%
   height: 100%;
   display: flex;
   transition: transform 0.5s ease-in-out;
@@ -50,7 +51,7 @@ export default function Page() {
           <StarterPage goToNextSlide={goToNextSlide} />
         </StepWrapper>
         <StepWrapper>
-          <MenuPage />
+          <TypePage />
         </StepWrapper>
       </SlideWrapper>
     </Container>
