@@ -7,6 +7,8 @@ import {useApi} from "../context/ApiContext";
 import {useRouter} from "next/navigation";
 
 
+//TODO: WHAT NEED TO DO:
+//TODO: 1. FIX DESIGN OF THIS PAGE
 const QrAuth = () => {
     const [loading, setLoading] = useState(true);
     const [link, setLink] = useState(null);
@@ -42,9 +44,15 @@ const QrAuth = () => {
             })
             .then(response => {
                 console.log(response);
-                const id = setInterval(() => fetchUser(response.uuid), 1000);
-                setIntervalId(id);
-            })
+                if (intervalId === -1) {
+                    const id = setInterval(() => fetchUser(response.uuid), 1000);
+                    setIntervalId(id);
+                }
+            });
+
+        return () => {
+            clearInterval(intervalId);
+        };
 
     }, []);
 

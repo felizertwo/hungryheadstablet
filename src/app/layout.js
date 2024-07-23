@@ -5,7 +5,7 @@ import "./globals.css";
 import {ApiProvider} from "@/app/context/ApiContext";
 import ProtectedRoute from "@/app/components/ProtectedRoute";
 import React from "react";
-import {CartProvider} from "@/app/context/CartProvider";
+import {CartProvider} from "@/app/context/CartContext";
 import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });

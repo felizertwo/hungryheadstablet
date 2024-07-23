@@ -57,7 +57,7 @@ const LoginPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        authenticate({email, password, deviceName: "devicename"}, loginTablet)//FIXME: need to change devicename
+        authenticate({email, password, deviceName: "POS"}, loginTablet)
             .catch(error => {
                 //TODO: It is necessary to add comprehensive error handling
                 alert(error.message);
