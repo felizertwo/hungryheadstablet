@@ -6,6 +6,7 @@ import Image from "next/image";
 import QRIcon from "../../images/qrcodeicon.png";
 import UserIcon from "../../images/usericon.png";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 const StartWrapper = styled.div`
   display: flex;
@@ -106,24 +107,25 @@ const TypeChooserWrapper = styled.div`
   }
 `;
 
-const TypePage = () => (
-  <StartWrapper style={{ position: "relative" }}>
+const TypePage = () => {
+  const router = useRouter();
+  return <StartWrapper style={{position: "relative"}}>
     <LogoSmall>
-      <Image src={Logo} width={260} height={122} alt="Logo" />
-      <BtnBack>Zurück</BtnBack>
+      <Image src={Logo} width={260} height={122} alt="Logo"/>
+      <BtnBack onClick={() => router.push("/")}>Zurück</BtnBack>
     </LogoSmall>
     <TypeWrapper>
       <IntroText>
-        Herzlich willkommen <br /> im Hungry Heads
+        Herzlich willkommen <br/> im Hungry Heads
       </IntroText>
       <Chooser>
         <TypeChooserWrapper>
           <Link href="/qr-auth">
             <BtnType>
-              <Image src={QRIcon} height={183} alt="qr code" />
+              <Image src={QRIcon} height={183} alt="qr code"/>
             </BtnType>
             <h4>
-              Hungry Heads <br />
+              Hungry Heads <br/>
               Mitglied
             </h4>
           </Link>
@@ -131,10 +133,10 @@ const TypePage = () => (
         <TypeChooserWrapper>
           <Link href="/menu" passHref>
             <BtnType>
-              <Image src={UserIcon} height={151} alt="Private User" />
+              <Image src={UserIcon} height={151} alt="Private User"/>
             </BtnType>
             <h4>
-              Hungry Heads <br />
+              Hungry Heads <br/>
               Gast
             </h4>
           </Link>
@@ -142,6 +144,6 @@ const TypePage = () => (
       </Chooser>
     </TypeWrapper>
   </StartWrapper>
-);
+};
 
 export default TypePage;

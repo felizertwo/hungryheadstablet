@@ -3,20 +3,6 @@ import {createContext, useContext, useEffect, useState} from "react";
 
 const CartContext = createContext();
 
-const CART_ITEMS_STORAGE_KEY = 'cartItems';
-
-const isExpired = (dateToCheck) => {
-    const today = new Date();
-    const inputDate = new Date(dateToCheck);
-
-
-    return (
-        today.getFullYear() === inputDate.getFullYear() &&
-        today.getMonth() === inputDate.getMonth() &&
-        today.getDate() === inputDate.getDate()
-    );
-};
-
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
     const [total, setTotal] = useState(0);

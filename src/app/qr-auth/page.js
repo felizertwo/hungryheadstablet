@@ -5,6 +5,61 @@ import QRCode from "qrcode.react";
 import LoadingSpinner from '../components/LoadingSpinner';
 import {useApi} from "../context/ApiContext";
 import {useRouter} from "next/navigation";
+import Image from "next/image";
+import Logo from "@/images/logo.png";
+
+const QrPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+    height: 100%;
+`;
+
+const QrWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LogoSmall = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: #ffffff;
+  width: 100%;
+  height: 200px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #999999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  img {
+    padding: 60px;
+  }
+`;
+
+const BtnBack = styled.div`
+  width: 154px;
+  height: 75px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  color: #000000;
+  font-weight: bold;
+  font-size: 25px;
+  margin: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none; /* Für das Container-Tag */
+  a {
+    text-decoration: none; /* Für das a-Tag innerhalb des Containers */
+    color: #000000; /* Optional, um die Textfarbe vom Eltern-Container zu erben */
+  }
+`;
 
 
 //TODO: WHAT NEED TO DO:
@@ -79,17 +134,25 @@ const QrAuth = () => {
     }, [user]);
 
     return (
-        <>
-            {!failedToGetUser && (<>
-                {loading ? <LoadingSpinner loading={loading}/> : <QRCode value={link} size={512}/>}
-                {!user && !failedToGetUser &&
-                    <div style={{marginTop: "20px"}}>Noch {secondLeft} Sekunden</div>}
-            </>)}
+       <QrPage>
+           <LogoSmall>
+               <Image src={Logo} width={260} height={122} alt="Logo" />
+               <BtnBack onClick={() => router.push("/type")}>Zurück</BtnBack>
+           </LogoSmall>
+           <QrWrapper>
 
-            {failedToGetUser && (<>
-                <div>Fehler: Benutzer konnte nicht abgerufen werden. Sie werden auf die Authentifizierungsseite weitergeleitet.</div>
-            </>)}
-        </>
+               {!failedToGetUser && (<>
+                   {loading ? <LoadingSpinner loading={loading}/> : <QRCode value={link} size={512}/>}
+                   {!user && !failedToGetUser &&
+                       <div style={{marginTop: "20px"}}>Noch {secondLeft} Sekunden</div>}
+               </>)}
+
+               {failedToGetUser && (<>
+                   <div>Fehler: Benutzer konnte nicht abgerufen werden. Sie werden auf die Authentifizierungsseite weitergeleitet.</div>
+               </>)}
+
+           </QrWrapper>
+       </QrPage>
     );
 };
 

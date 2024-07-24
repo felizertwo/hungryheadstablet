@@ -1,11 +1,10 @@
 import { Drawer } from "@mui/material";
 import React, {useState} from "react";
 import styled from "styled-components";
-import Crossant from "../../images/Snacks.png";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import {useCart} from "@/app/context/CartContext";
+`import {useCart} from "@/app/context/CartContext";`
 
 const CartBody = styled.div`
   height: 80vh;
@@ -185,11 +184,8 @@ const Bottom = styled.div`
   }
 `;
 
-export default function CartAddItem({ open, onClose, foodItem = {} }) {
+export default function CartAddItem({ open, onClose, foodItem, addToCartHandler }) {
   const [amount, setAmount] = useState(1);
-  const cart = useCart();
-
-  console.log("CartAddItem should be visible")
 
   const increaseAmount = () => {
     setAmount(prevState => prevState + 1);
@@ -199,8 +195,8 @@ export default function CartAddItem({ open, onClose, foodItem = {} }) {
     setAmount(prevState => prevState === 1 ? 1 : prevState - 1);
   };
 
-  const addToCart = (item) => {
-    cart.addItemToCart(foodItem);
+  const addToCart = () => {
+    addToCartHandler(foodItem, amount);
     onClose();
   };
 
@@ -210,17 +206,6 @@ export default function CartAddItem({ open, onClose, foodItem = {} }) {
       <h2 className="foodName">{foodItem.name}</h2>
       <span className="description">{foodItem.description}</span>
       <p className="price">{foodItem.price} €</p>
-      {/*<SideInfo>*/}
-      {/*  <h2>Headline</h2>*/}
-      {/*  <label>*/}
-      {/*    <input type="checkbox" />*/}
-      {/*    Lorem ipsum*/}
-      {/*  </label>*/}
-      {/*  <label>*/}
-      {/*    <input type="checkbox" />*/}
-      {/*    Lorem ipsum*/}
-      {/*  </label>*/}
-      {/*</SideInfo>*/}
       <Bottom>
         <div className="firstBox">
           <button className="backbutton">

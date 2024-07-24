@@ -3,13 +3,12 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Logo from "../../images/logo.png";
-import ColdDrinksIcon from "../../images/ColdDrinks.png";
-import HotDrinksIcon from "../../images/HotDrinks.png";
-import SnacksIcon from "../../images/Snacks.png";
 import TabbedPanel from "../components/TabbedPanel";
 import {useApi} from "@/app/context/ApiContext";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import CartAddItem from "@/app/components/CartAddItem";
+import {MenuTabContent} from "@/app/components/MenuTabContent";
+import {useCart} from "@/app/context/CartContext";
+import Link from "next/link";
 
 const MenuWrapper = styled.div`
   height: 100%;
@@ -29,139 +28,150 @@ const MenuTabBody = styled.div`
   width: 100%;
 `;
 
-const MenuBody = styled.div`
-  background: #f4f4f4;
-  height: 100vh;
-  padding: 40px;
-  padding-bottom: 300px;
+const CartFloater = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000000;
+  color: #ffffff;
+  height: 192px;
+  width: 100%;
+  max-width: 1080px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  box-shadow: 0 -2px 30px #00000014;
+  padding: 20px 50px;
   box-sizing: border-box;
+  z-index: 1000;
 `;
 
-const SingleMenu = styled.div`
-  flex: 1 1 calc(50% - 40px);
-  position: relative;
-  box-sizing: border-box;
-  margin: 0;
+const CartTotal = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  .imageBox {
-    background: white;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 100%;
-    position: relative;
-    margin-bottom: 20px;
-
-    img {
-      position: absolute; /* Position image absolutely within the container */
-      width: 45%;
-      object-fit: contain;
-      max-height: 100%; /* Ensure image doesn't exceed its container */
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%); /* Center image */
-    }
-  }
-
+  justify-content: flex-start;
+  align-items: flex-start;
   p {
-    margin: 10px 0;
-    font-size: 24px;
-    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 21px;
+    line-height: 36px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
   }
-
-  span {
-    margin-bottom: 10px;
-    font-size: 20px;
-  }
-
-  button {
-    height: 50px;
-    width: 50px;
-    background: #c86a61;
-    border-radius: 100%;
-    color: white;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
   }
 `;
 
+const BtnCartTotal = styled.div`
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 37px;
+  height: 105px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 330px;
+  border-radius: 10px;
+  border: 0;
+`;
 
+const CircleAmount = styled.div`
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  background-color: #19a400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 21px;
+`;
 
 //TODO: WHAT NEED TO DO:
-//TODO: 1. DISCUSS WITH BACKEND DEVELOPER ABOUT TAB(Cold Drinks, Hot Drinks, Snacks)
-//TODO: 2. MARK + BUTTON WITH ANOTHER COLOR WHEN ITEM IS ADDED TO CART
+//TODO: 1. DISCUSS WITH BACKEND DEVELOPER ABOUT TAB(Cold Drinks, Hot Drinks, Snacks) and their pictures
+//TODO: 2. MARK + BUTTON WITH ANOTHER COLOR WHEN ITEM IS ADDED TO CART ✓
 //TODO: 3. ADD BUTTON/LINK TO ROUTE CHECKOUT PAGE
 //TODO: 4. ADD ERROR HANDLING
 export default function MenuPage() {
   const [tabs, setTabs] = useState([]);
+  const [foodItems, setFoodItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const api = useApi();
+  const cart = useCart();
 
   const selectItem = (item) => {
-      console.log("set selectedItem to ", item)
       setSelectedItem(item);
   };
 
-    useEffect(   () =>  {
+  const addToCart = (item, amount) => {
+      cart.addItemToCart(item, amount);
+  };
 
+    useEffect(   () =>  {
         const fetchFood = async () => {
             const items = await api.foodItems();
 
             if(!items){
-                //TODO: Need to add error handling
-                return;
+                return; //TODO: Need to add error handling
             }
 
-            const categoryMap = new Map();
-
-            items
-                .map((item) => item.food_category)
-                .forEach(({ id, name }) => categoryMap.set(id, name));
-
-            const categories = Array.from(categoryMap.entries()).map(([key, value]) => {
-                return { id: key, name: value };
-            });
-
-            setTabs(categories.map(category => {
-                const itemsTabs = items.filter(({food_category_id}) => food_category_id === category.id);
-                return {
-                    label: category.name,
-                    content:  <MenuBody>{itemsTabs.map((item, index) => (
-                        <SingleMenu key={item.category_id + "." + index} onClick={() =>  selectItem(item)}>
-                            <div className="imageBox">
-                                <img src={item.image} alt={item.name}/>
-                            </div>
-                            <p>{item.name}</p>
-                            <span>{item.price}€</span>
-                            <button>
-                                <AddOutlinedIcon style={{width: "30px", height: "30px"}}/>
-                            </button>
-                        </SingleMenu>
-                    ))}</MenuBody>,
-                    image: ColdDrinksIcon.src//FIXME: it is necessary to use appropriate picture
-                };
-            }));
+            setFoodItems(items);
         }
 
-         fetchFood();
+        fetchFood();
     }, []);
 
-    useEffect(() => {}, []);
+    const extractCategories = () => {
+        const categoryMap = new Map();
 
-  useEffect(() => {
-      console.log(selectedItem);
-  }, [selectedItem]);
+        foodItems
+            .map((item) => item.food_category)
+            .forEach(({id, name, image}) => categoryMap.set(id, {name, image}));
+
+        console.log("categoryMap: ", categoryMap);
+
+        return Array.from(categoryMap.entries()).map(([key, value]) => {
+            return {id: key, name: value.name, image: value.image};
+        });
+    }
+
+    useEffect(() => {
+        if (!foodItems) {
+            return;
+        }
+        const addedItems = cart.cartItems.map((el) => el.item.id);
+        const categories = extractCategories();
+
+        setTabs(categories.map(category => {
+            const tabItems = foodItems.filter(({food_category_id}) => food_category_id === category.id);
+            return {
+                label: category.name,
+                content:  <MenuTabContent tabItems={tabItems} selectItemHandler={selectItem} addedItems={addedItems} />,
+                image: category.image
+            };
+        }));
+
+    }, [foodItems, cart.cartItems]);
+
+    useEffect(() => {
+        const addedItems = cart.cartItems.map((el) => el.item.id);
+    }, [cart.cartItems]);
 
   return (
     <MenuWrapper>
@@ -169,9 +179,23 @@ export default function MenuPage() {
         <img src={Logo.src} alt="Menu Logo" />
       </div>
       <MenuTabBody>
-          {selectedItem && ( <CartAddItem open={selectedItem} onClose={() => selectItem(null)} foodItem={selectedItem}  />)}
+          {selectedItem && ( <CartAddItem open={selectedItem} onClose={() => selectItem(null)} foodItem={selectedItem} addToCartHandler={addToCart} />)}
         <TabbedPanel tabs={tabs} />
       </MenuTabBody>
+        {cart.nonEmpty && (
+            <CartFloater>
+                <CartTotal>
+                    <p>Gesamtsumme</p>
+                    <h4>{Number(cart.total).toFixed(2)} €</h4>
+                </CartTotal>
+                <Link href="/cart" passHref>
+                    <BtnCartTotal>
+                        <CircleAmount>{cart.count}</CircleAmount>
+                        <h4>Bestellen</h4>
+                    </BtnCartTotal>
+                </Link>
+            </CartFloater>
+        )}
     </MenuWrapper>
   );
 }

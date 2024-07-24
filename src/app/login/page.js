@@ -6,13 +6,11 @@ import React, {useState} from "react";
 import styled from 'styled-components';
 
 const FormContainer = styled.div`
-  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
 `;
 
 const Title = styled.h2`
@@ -24,6 +22,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 35%;
 `;
 
 const StyledInput = styled.input`
