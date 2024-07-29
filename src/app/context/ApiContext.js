@@ -77,6 +77,10 @@ export const ApiProvider = ({ children }) => {
             });
     };
 
+    const logoutUserApi = () => {
+        setUser(null);
+    }
+
     const value = {
         token,
         loginTablet: handleLoginTablet,
@@ -87,6 +91,7 @@ export const ApiProvider = ({ children }) => {
         getSession: getSessionApi,
         getSumUpToken: getSumUpToken,
         loginUser: loginUserApi,
+        logoutUser: logoutUserApi,
         getUser: () => user,
         isAuthenticated: () => !!user
     };

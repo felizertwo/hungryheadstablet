@@ -1,9 +1,11 @@
 'use client'
 
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import Ginger from "../images/ginger.png";
 import { useRouter } from "next/navigation";
+import {useApi} from "@/app/context/ApiContext";
+import {useCart} from "@/app/context/CartContext";
 
 const StartWrapper = styled.div`
   display: flex;
@@ -63,6 +65,13 @@ const StartWrapper = styled.div`
 
 export default function StarterPage() {
   const router = useRouter();
+  const cart = useCart();
+  const api = useApi();
+  useEffect(() => {
+      cart.cleanCart();
+      api.logoutUser();
+  }, []);
+
   return (
       <StartWrapper>
         <div className="header">

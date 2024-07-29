@@ -33,11 +33,16 @@ const ErrorPage = () => {
     router.push("/cart");
   };
 
+  const handleClose = async () => {
+      router.push("/");
+  };
+
   return (
     <ErrorContainer>
       <h1>Payment Failed</h1>
       <p>There was an error processing your payment. Please try again.</p>
       <BtnBack onClick={handleBack}>Zurück zum Warenkorb</BtnBack>
+      <BtnBack onClick={handleClose}>Zurück zur Hauptseite</BtnBack>
     </ErrorContainer>
   );
 };

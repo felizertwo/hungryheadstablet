@@ -216,10 +216,25 @@ const CartPage = () => {
       // Get access token
       const token = await api.getSumUpToken();
 
+      console.log("token: " + token);
+
       try {
-        const { isLoggedIn } = await new Promise((resolve, reject) =>
-          SumUp.isLoggedIn(resolve, reject)
-        );
+          try {
+              const { isLoggedIn } = await new Promise((resolve, reject) =>
+                  {
+                      console.log("try to log in");
+                      SumUp.isLoggedIn(resolve, reject);
+                      console.log(" logged in");
+                  }
+              );
+          } catch (e) {
+
+              console.log("Cannot login: " + e.message);
+              throw e;
+          }
+
+
+        console.log("isLoggedIn: " + isLoggedIn);
         if (!isLoggedIn) {
           await new Promise((resolve, reject) =>
             SumUp.login(
