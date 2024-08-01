@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useApi } from "../context/ApiContext";
 import { useEffect, useState } from "react";
+import {logger} from "@/app/services/logger";
 
 const CartContainer = styled.div`
   padding: 20px;
@@ -144,7 +145,6 @@ const CartPage = () => {
 
     if (api.isAuthenticated()) {
       const user = api.getUser();
-      console.log(user);
       orderDetails.userId = user.id;
       if (user.organization) {
         const organization = user.organization;
@@ -206,7 +206,7 @@ const CartPage = () => {
           });
         })
         .catch((error) => {
-          console.log("Something went wrong during creation the order");
+          logger.error("Something went wrong during creation the order", error);
           alert("Something went wrong during creation the order");
           router.push("/error");
         });
@@ -233,9 +233,9 @@ const CartPage = () => {
               reject
             )
           );
-          console.log("Logged in to SumUp");
+          logger.info("Logged in to SumUp");
         } else {
-          console.log("Already logged in to SumUp");
+          logger.info("Already logged in to SumUp");
         }
 
         await new Promise((resolve, reject) => SumUp.prepare(resolve, reject));
@@ -250,7 +250,7 @@ const CartPage = () => {
             // TODO: to refund money without any
             // TODO: information if something goes wrong
 
-            console.log("Payment successful:", success);
+            logger.info("Payment successful:", success);
             const orderItems = cart.cartItems.map((el) => {
               return { amount: el.quantity, food_item_id: el.item.id };
             });
@@ -276,19 +276,19 @@ const CartPage = () => {
                 });
               })
               .catch((error) => {
-                console.log("Something went wrong during creation the order");
+                logger.error("Something went wrong during creation the order", error);
                 alert("Something went wrong during creation the order");
                 router.push("/error");
               });
           },
           (error) => {
-            console.error("Payment failed:", error);
+            logger.error("Payment failed:", error);
             alert("Payment failed: " + error.message);
             router.push("/error");
           }
         );
       } catch (error) {
-        console.error("SumUp operation failed:", error);
+        logger.error("SumUp operation failed:", error);
         alert("An error occurred: " + error.message);
       }
     }

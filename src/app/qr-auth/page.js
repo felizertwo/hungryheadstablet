@@ -98,7 +98,6 @@ const QrAuth = () => {
                 return response;
             })
             .then(response => {
-                console.log(response);
                 if (intervalId === -1) {
                     const id = setInterval(() => fetchUser(response.uuid), 1000);
                     setIntervalId(id);

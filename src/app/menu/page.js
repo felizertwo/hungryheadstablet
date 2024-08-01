@@ -144,8 +144,6 @@ export default function MenuPage() {
             .map((item) => item.food_category)
             .forEach(({id, name, image}) => categoryMap.set(id, {name, image}));
 
-        console.log("categoryMap: ", categoryMap);
-
         return Array.from(categoryMap.entries()).map(([key, value]) => {
             return {id: key, name: value.name, image: value.image};
         });
@@ -168,10 +166,6 @@ export default function MenuPage() {
         }));
 
     }, [foodItems, cart.cartItems]);
-
-    useEffect(() => {
-        const addedItems = cart.cartItems.map((el) => el.item.id);
-    }, [cart.cartItems]);
 
   return (
     <MenuWrapper>

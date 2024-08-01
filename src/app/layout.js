@@ -9,6 +9,7 @@ import {CartProvider} from "@/app/context/CartContext";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import InactivityRedirect from "@/app/components/InactivityRedirect";
+import TabletErrorBoundary from "@/app/components/ErrorBoundary";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,23 +24,24 @@ const Wrapper = styled.div`
 export default function RootLayout({ children }) {
   const pathname = usePathname();
   const noAuthRequired = ['/login'];
-  console.log("Current path:", pathname);
+
   return (
     <html lang="en">
       <body className={inter.className}>
-          <ApiProvider>
-            {noAuthRequired.includes(pathname) ? (
-                <Wrapper>{children}</Wrapper>
-            ) : (
-                <ProtectedRoute>
-                    <InactivityRedirect timeout={120_000} warningTime={10_000} />
-                    <CartProvider>
-                      <Wrapper> {children}</Wrapper>
-                    </CartProvider>
-                </ProtectedRoute>
-
-            )}
-          </ApiProvider>
+          <TabletErrorBoundary>
+              <ApiProvider>
+                {noAuthRequired.includes(pathname) ? (
+                    <Wrapper>{children}</Wrapper>
+                ) : (
+                    <ProtectedRoute>
+                        <InactivityRedirect timeout={120_000} warningTime={10_000} />
+                        <CartProvider>
+                          <Wrapper> {children}</Wrapper>
+                        </CartProvider>
+                    </ProtectedRoute>
+                )}
+              </ApiProvider>
+          </TabletErrorBoundary>
       </body>
     </html>
   );

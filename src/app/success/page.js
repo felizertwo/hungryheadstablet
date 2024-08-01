@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useRouter, useSearchParams } from "next/navigation";
+import {logger} from "@/app/services/logger";
 
 const SuccessContainer = styled.div`
   padding: 20px;
@@ -57,11 +58,11 @@ const SuccessPage = () => {
         await new Promise((resolve, reject) =>
           BTPrinter.connect(resolve, reject, "BlueTooth Printer")
         );
-        console.log("Connected to printer successfully.");
+        logger.info("Connected to printer successfully.");
       } catch (error) {
         alert("Failed to connect to the printer.");
         alert(error);
-        console.error("Failed to connect to the printer:", error);
+        logger.error("Failed to connect to the printer:", error);
       }
     };
 
@@ -76,13 +77,12 @@ const SuccessPage = () => {
     await new Promise((resolve, reject) =>
       BTPrinter.printBase64(
         (data) => {
-          console.log("Success");
-          console.log(data);
+          logger.info("Success");
+          logger.info(data);
           resolve(data);
         },
         (err) => {
-          console.log("Error");
-          console.log(err);
+          logger.error("Error: ", err);
           reject(err);
         },
         base64Image, // Base64 string
@@ -92,13 +92,11 @@ const SuccessPage = () => {
     await new Promise((resolve, reject) =>
       BTPrinter.printTextSizeAlign(
         (data) => {
-          console.log("Success");
-          console.log(data);
+          logger.info("Success: ", data);
           resolve(data);
         },
         (err) => {
-          console.log("Error");
-          console.log(err);
+          logger.error("Error: ", err);
           reject(err);
         },
         "Rechnung \n", // string to print
@@ -109,13 +107,11 @@ const SuccessPage = () => {
     await new Promise((resolve, reject) =>
       BTPrinter.printTextSizeAlign(
         (data) => {
-          console.log("Success");
-          console.log(data);
+          logger.info("Success: ", data);
           resolve(data);
         },
         (err) => {
-          console.log("Error");
-          console.log(err);
+         logger.error("Error: ", err);
           reject(err);
         },
         `${title}\n`, // string to print
@@ -136,13 +132,11 @@ const SuccessPage = () => {
     await new Promise((resolve, reject) =>
       BTPrinter.printTextSizeAlign(
         (data) => {
-          console.log("Success");
-          console.log(data);
+          logger.info("Success: ", data);
           resolve(data);
         },
         (err) => {
-          console.log("Error");
-          console.log(err);
+          logger.error("Error: ", err);
           reject(err);
         },
         "\n\n___________________\n\n\n",

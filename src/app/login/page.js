@@ -4,6 +4,7 @@ import {useApi} from '../context/ApiContext';
 import {authenticate} from '../services/api/authenticate';
 import React, {useEffect, useState} from "react";
 import styled from 'styled-components';
+import {logger} from "@/app/services/logger";
 
 const FormContainer = styled.div`
     background: white;
@@ -117,7 +118,7 @@ const LoginPage = () => {
             }, setToken);
             setProgress(100);
         } catch (error) {
-            console.log(error);
+            logger.error(error);
             setError("Cannot to finish initialization. The reason is logged. Please try again.");
             setProgress(0);
         } finally {

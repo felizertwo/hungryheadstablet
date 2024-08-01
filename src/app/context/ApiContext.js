@@ -10,6 +10,7 @@ import {initiateQrAuthentication} from "../services/api/qr-authenticate";
 import {getSession} from "../services/api/get-session";
 import { sumupToken } from '../services/api/sumupToken';
 import {getUser} from "../services/api/get-user";
+import {logger} from "@/app/services/logger";
 
 const ApiContext = createContext();
 
@@ -33,7 +34,7 @@ export const ApiProvider = ({ children }) => {
     };
 
     const handleLogoutTablet = () => {
-        console.log("handleLogoutTablet is called");
+        logger.info("handleLogoutTablet is called");
         setToken(null);
         localStorage.removeItem(AUTH_TOKEN_STORAGE_KEY); // Remove token from local storage
         router.push("/login");
