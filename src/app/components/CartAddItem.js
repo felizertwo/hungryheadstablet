@@ -120,7 +120,8 @@ const Bottom = styled.div`
       border: none;
       border-radius: 10px;
       color: black;
-      padding: 17px 20px;
+      padding: 0 20px;
+      height: 50px;
       font-size: 20px;
       display: flex;
       align-items: center;
@@ -130,11 +131,14 @@ const Bottom = styled.div`
     }
 
     .changeAmount {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: white;
       border: 1px solid #dbdbdb;
       border-radius: 10px;
-      height: 54px;
-      width: 54px;
+      height: 50px;
+      width: 50px;
       margin: 0 5px;
     }
 
@@ -145,8 +149,8 @@ const Bottom = styled.div`
       background: #eeeeee;
       border: 1px solid #00000029;
       border-radius: 10px;
-      height: 54px;
-      width: 54px;
+      height: 50px;
+      width: 50px;
       margin: 0 5px;
       font-size: 20px;
     }
@@ -154,7 +158,7 @@ const Bottom = styled.div`
     .priceCalculation {
       display: flex;
       flex-direction: column;
-      margin-left: 15px;
+      margin-left: 10px;
 
       span {
         margin: 0;
@@ -176,7 +180,8 @@ const Bottom = styled.div`
     border: none;
     border-radius: 10px;
     color: white;
-    padding: 17px 20px;
+    padding: 0 20px;
+    height: 50px;
     font-size: 20px;
     display: flex;
     align-items: center;
