@@ -107,7 +107,13 @@ const TypeChooserWrapper = styled.div`
 const TypePage = () => (
   <StartWrapper style={{ position: "relative" }}>
     <LogoSmall>
-      <Image src={Logo} width={260} height={122} alt="Logo" />
+      <Image
+        style={{ objectFit: "contain" }}
+        src={Logo}
+        width={260}
+        height={122}
+        alt="Logo"
+      />
       <BtnBack>Zurück</BtnBack>
     </LogoSmall>
     <TypeWrapper>

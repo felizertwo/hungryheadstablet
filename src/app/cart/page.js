@@ -32,7 +32,6 @@ const CartItemText = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 30px;
-  width: 600px;
 `;
 
 const CartItemPrice = styled.div`
@@ -46,7 +45,7 @@ const Total = styled.div`
   margin-top: 10px;
   font-size: 30px;
   font-weight: bold;
-  padding-bottom: 20px;
+  padding-bottom: 0px;
 `;
 
 const BtnCheckout = styled.button`
@@ -120,7 +119,7 @@ const Subtotal = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 23px;
   color: #000000;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
 `;
 
 const Discount = styled.div`

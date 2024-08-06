@@ -11,12 +11,11 @@ const StartWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background: #f4f4f4;
-  height: 100vh;
   width: 100%;
 
   .header {
     width: 100%;
-    height: 65vh;
+    height: 50vh;
 
     img {
       width: 100%;
@@ -29,34 +28,32 @@ const StartWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    height: 35vh;
+    justify-content: center;
+    height: 50vh;
     width: 100%;
-    padding-top: 30px;
 
     span {
       color: #c86a61;
-      font-size: 34px;
+      font-size: 24px;
     }
 
     h2 {
       margin: 0;
-      margin: 20px 0;
+      margin: 15px 0;
       text-align: center;
-      font-size: 70px;
-      line-height: 70px;
+      font-size: 40px;
+      line-height: 40px;
       color: #000000;
     }
 
     button {
-      width: 50%;
-      padding: 40px 10px;
+      padding: 25px 40px;
       color: #000000;
-      border-radius: 40px;
+      border-radius: 30px;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       border: none;
       outline: none;
-      font-size: 34px;
+      font-size: 30px;
       font-weight: 600;
       background: white;
     }

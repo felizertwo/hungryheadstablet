@@ -142,7 +142,13 @@ const TypePage = () => {
   return (
     <StartWrapper style={{ position: "relative" }}>
       <LogoSmall>
-        <Image src={Logo} width={260} height={122} alt="Logo" />
+        <Image
+          src={Logo}
+          width={260}
+          height={122}
+          alt="Logo"
+          style={{ objectFit: "contain" }}
+        />
         <BtnBack onClick={() => router.push("/")}>Zurück</BtnBack>
       </LogoSmall>
       <TypeWrapper>

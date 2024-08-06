@@ -19,14 +19,13 @@ const CircleBtn = styled.div`
 `;
 
 const MenuBody = styled.div`
-  background: #f4f4f4;
-  height: 100vh;
   padding: 40px;
-  padding-bottom: 300px;
   display: flex;
   flex-wrap: wrap;
+  background: #f4f4f4;
   gap: 40px;
   box-sizing: border-box;
+  padding-bottom: 150px;
 `;
 
 const SingleMenu = styled.div`

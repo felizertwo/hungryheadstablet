@@ -135,7 +135,13 @@ const QrAuth = () => {
   return (
     <QrPage>
       <LogoSmall>
-        <Image src={Logo} width={260} height={122} alt="Logo" />
+        <Image
+          src={Logo}
+          width={260}
+          height={122}
+          alt="Logo"
+          style={{ objectFit: "contain" }}
+        />
         <BtnBack onClick={() => router.push("/type")}>Zurück</BtnBack>
       </LogoSmall>
       <QrWrapper>
@@ -144,7 +150,7 @@ const QrAuth = () => {
             {loading ? (
               <LoadingSpinner loading={loading} />
             ) : (
-              <QRCode value={link} size={512} />
+              <QRCode value={link} size={200} />
             )}
             {!user && !failedToGetUser && (
               <div style={{ marginTop: "20px" }}>

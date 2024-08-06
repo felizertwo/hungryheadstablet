@@ -26,6 +26,8 @@ const MenuWrapper = styled.div`
 
 const MenuTabBody = styled.div`
   width: 100%;
+  height: 100%;
+  background: #f4f4f4;
 `;
 
 const CartFloater = styled.div`

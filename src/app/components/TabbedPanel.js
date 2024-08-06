@@ -6,6 +6,7 @@ import styled from "styled-components";
 const PanelWrapper = styled(Box)`
   margin-bottom: 20px;
   width: 100%;
+  height: 100%;
 `;
 
 const TabPanel = (props) => {
@@ -38,6 +39,8 @@ const a11yProps = (index) => {
 };
 
 const StyledTabs = styled(Tabs)`
+  background: white;
+
   .MuiTabs-indicator {
     background-color: #c86a61;
   }

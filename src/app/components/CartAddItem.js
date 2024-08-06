@@ -7,25 +7,25 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 `import {useCart} from "@/app/context/CartContext";`;
 
 const CartBody = styled.div`
-  height: 80vh;
   border-radius: 16px 16px 0 0;
   overflow: hidden;
-  padding-top: 100px;
+  padding-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  padding-bottom: 150px;
 
   .selectedImage {
-    width: 280px;
-    height: 280px;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
     border-radius: 20px;
   }
 
   .foodName {
     font-size: 25px;
-    margin: 40px 0;
+    margin: 15px 0;
   }
 
   .description {
@@ -106,7 +106,7 @@ const Bottom = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 30px 0;
-  width: 93%;
+  width: calc(100% - 40px);
   position: absolute;
   bottom: 0;
 
