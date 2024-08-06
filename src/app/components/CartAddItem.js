@@ -106,7 +106,7 @@ const Bottom = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 30px 0;
-  width: calc(100% - 40px);
+  width: calc(100% - 30px);
   position: absolute;
   bottom: 0;
 
@@ -120,7 +120,7 @@ const Bottom = styled.div`
       border: none;
       border-radius: 10px;
       color: black;
-      padding: 20px 45px;
+      padding: 17px 20px;
       font-size: 20px;
       display: flex;
       align-items: center;
@@ -133,8 +133,8 @@ const Bottom = styled.div`
       background: white;
       border: 1px solid #dbdbdb;
       border-radius: 10px;
-      height: 62px;
-      width: 62px;
+      height: 54px;
+      width: 54px;
       margin: 0 5px;
     }
 
@@ -145,8 +145,8 @@ const Bottom = styled.div`
       background: #eeeeee;
       border: 1px solid #00000029;
       border-radius: 10px;
-      height: 62px;
-      width: 62px;
+      height: 54px;
+      width: 54px;
       margin: 0 5px;
       font-size: 20px;
     }
@@ -176,7 +176,7 @@ const Bottom = styled.div`
     border: none;
     border-radius: 10px;
     color: white;
-    padding: 20px 45px;
+    padding: 17px 20px;
     font-size: 20px;
     display: flex;
     align-items: center;
@@ -237,7 +237,7 @@ export default function CartAddItem({
             </div>
           </div>
           <button className="addToCart" onClick={addToCart}>
-            Add to Cart
+            Hinzufügen
           </button>
         </Bottom>
       </CartBody>
