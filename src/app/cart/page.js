@@ -1,13 +1,16 @@
-"use client"
+"use client";
 
 import styled from "styled-components";
-import {useCart} from "@/app/context/CartContext";
-import Trash from "../../images/trash-2.png";
+import { useCart } from "@/app/context/CartContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useApi } from "../context/ApiContext";
 import { useEffect, useState } from "react";
-import {logger} from "@/app/services/logger";
+import { logger } from "@/app/services/logger";
+//ICONS
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 
 const CartContainer = styled.div`
   padding: 20px;
@@ -28,39 +31,37 @@ const CartItem = styled.div`
 const CartItemText = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  font-size: 40px;
+  font-size: 30px;
   width: 600px;
 `;
 
 const CartItemPrice = styled.div`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
 `;
 
 const Total = styled.div`
   font-family: Arial, Helvetica, sans-serif;
-  margin-top: 20px;
-  font-size: 40px;
+  margin-top: 10px;
+  font-size: 30px;
   font-weight: bold;
   padding-bottom: 20px;
 `;
 
 const BtnCheckout = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 40px;
-  font-weight: bold;
-  background-color: #000;
-  color: #fff;
+  margin-top: 10px;
+  background: black;
   border: none;
-  border-radius: 20px;
-  width: 100%;
-  height: 147px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-radius: 10px;
+  color: white;
+  padding: 20px 45px;
+  font-size: 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
 
   &:hover {
     background-color: #333;
@@ -69,8 +70,8 @@ const BtnCheckout = styled.button`
 
 const EnDecreaseBtn = styled.div`
   background-color: #f1f1f1;
-  height: 74px;
-  width: 74px;
+  height: 60px;
+  width: 60px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -85,11 +86,16 @@ const CartItemsWapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding-bottom: 250px;
 `;
 
 const CartImage = styled.div`
   border-radius: 10px;
   padding-right: 20px;
+
+  img {
+    object-fit: cover;
+  }
 `;
 
 const Quantity = styled.p`
@@ -102,19 +108,17 @@ const Quantity = styled.p`
 const PaymentFooter = styled.div`
   position: fixed;
   bottom: 0;
-  left: 30px;
-  width: 980px;
+  width: calc(100% - 60px);
+  padding: 30px 30px;
   background-color: white;
-  height: 480px;
   display: flex;
   flex-direction: column;
-  padding: 50px 0 0 0;
   border-top: 1px solid #00000029;
 `;
 
 const Subtotal = styled.div`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 34px;
+  font-size: 23px;
   color: #000000;
   padding-bottom: 10px;
 `;
@@ -169,11 +173,11 @@ const CartPage = () => {
   }, [cart.total]);
 
   useEffect(() => {
-      if (cart.nonEmpty) {
-          return;
-      }
+    if (cart.nonEmpty) {
+      return;
+    }
 
-      router.push("/");
+    router.push("/");
   }, [cart.nonEmpty]);
 
   const paymentOptions = {
@@ -216,11 +220,9 @@ const CartPage = () => {
       // Get access token
       const token = await api.getSumUpToken();
       try {
-          const { isLoggedIn } = await new Promise((resolve, reject) =>
-              {
-                  SumUp.isLoggedIn(resolve, reject);
-              }
-          );
+        const { isLoggedIn } = await new Promise((resolve, reject) => {
+          SumUp.isLoggedIn(resolve, reject);
+        });
 
         if (!isLoggedIn) {
           await new Promise((resolve, reject) =>
@@ -276,7 +278,10 @@ const CartPage = () => {
                 });
               })
               .catch((error) => {
-                logger.error("Something went wrong during creation the order", error);
+                logger.error(
+                  "Something went wrong during creation the order",
+                  error
+                );
                 alert("Something went wrong during creation the order");
                 router.push("/error");
               });
@@ -295,142 +300,137 @@ const CartPage = () => {
   };
 
   return (
-      <CartContainer>
-        <CartItemsWapper>
-          {!cart.nonEmpty ? (
-              <p>Ihr Warenkorb ist leer.</p>
-          ) : (
-              cart.cartItems.map((el, index) => (
-                  <CartItem key={index}>
-                    <CartImage>
-                      <Image
-                          src={el.item.image}
-                          width={130}
-                          height={130}
-                          style={{ borderRadius: 5 }}
-                          alt={el.item.name}
-                      />
-                    </CartImage>
-                    <div
-                        style={{
-                          width: "100%",
-                          display: "flex",
-                          flexDirection: "column",
-                        }}
-                    >
-                      <div
-                          style={{
-                            width: "100%",
-                            display: "flex",
-                            justifyContent: "space-between",
-
-                            padding: "0 0 10px 0",
-                          }}
-                      >
-                        <CartItemText>{el.item.name}</CartItemText>
-                        <CartItemPrice>
-                          {(el.item.price * el.quantity).toFixed(2)} €
-                        </CartItemPrice>
-                      </div>
-                      <div
-                          style={{
-                            width: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
-                      >
-                        <div
-                            style={{
-                              display: "flex",
-                              width: 220,
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
-                        >
-                          <EnDecreaseBtn
-                              onClick={() => cart.reduceQuantity(el.item)}
-                          >
-                            -
-                          </EnDecreaseBtn>
-                          <Quantity>{el.quantity}</Quantity>
-                          <EnDecreaseBtn
-                              onClick={() => cart.addItemToCart(el.item)}
-                          >
-                            +
-                          </EnDecreaseBtn>
-                        </div>
-
-                        <RemoveItemButton
-                            onClick={() => cart.removeItemFromCart(el.item)}
-                        >
-                          <Image src={Trash} width={55} alt="Remove item" />
-                        </RemoveItemButton>
-                      </div>
-                    </div>
-                  </CartItem>
-              ))
-          )}
-        </CartItemsWapper>
-        <PaymentFooter>
-          <div
-              style={{
-                display: "flex",
-                width: "100%",
-                justifyContent: "space-between",
-              }}
-          >
-            <Subtotal>Zwischensumme: </Subtotal>
-            <Subtotal>{cart.netTotal.toFixed(2)} €</Subtotal>
-          </div>
-          <div
-              style={{
-                display: "flex",
-                width: "100%",
-                justifyContent: "space-between",
-              }}
-          >
-            <Subtotal style={{ color: "#888888" }}>
-              {cart.tax * 100}% MwSt.:{" "}
-            </Subtotal>
-            <Subtotal style={{ color: "#888888" }}>
-              {(cart.total - cart.netTotal).toFixed(2)} €
-            </Subtotal>
-          </div>
-          {!!orderDetails.organizationName && (
-              <>
+    <CartContainer>
+      <CartItemsWapper>
+        {!cart.nonEmpty ? (
+          <p>Ihr Warenkorb ist leer.</p>
+        ) : (
+          cart.cartItems.map((el, index) => (
+            <CartItem key={index}>
+              <CartImage>
+                <Image
+                  src={el.item.image}
+                  width={130}
+                  height={130}
+                  style={{ borderRadius: 5 }}
+                  alt={el.item.name}
+                />
+              </CartImage>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+
+                    padding: "0 0 10px 0",
+                  }}
+                >
+                  <CartItemText>{el.item.name}</CartItemText>
+                  <CartItemPrice>
+                    {(el.item.price * el.quantity).toFixed(2)} €
+                  </CartItemPrice>
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div
                     style={{
                       display: "flex",
-                      width: "100%",
+                      width: 220,
                       justifyContent: "space-between",
+                      alignItems: "center",
                     }}
-                >
-                  <Discount>{orderDetails.organizationName}</Discount>
-                  <Discount>
-                    {orderDetails.billedToOrganization.toFixed(2)} €
-                  </Discount>
+                  >
+                    <EnDecreaseBtn onClick={() => cart.reduceQuantity(el.item)}>
+                      <RemoveOutlinedIcon style={{ fontSize: 28 }} />
+                    </EnDecreaseBtn>
+                    <Quantity>{el.quantity}</Quantity>
+                    <EnDecreaseBtn onClick={() => cart.addItemToCart(el.item)}>
+                      <AddOutlinedIcon style={{ fontSize: 28 }} />
+                    </EnDecreaseBtn>
+                  </div>
+
+                  <RemoveItemButton
+                    onClick={() => cart.removeItemFromCart(el.item)}
+                  >
+                    <DeleteOutlineOutlinedIcon style={{ fontSize: 45 }} />
+                  </RemoveItemButton>
                 </div>
-              </>
-          )}
-          <div
+              </div>
+            </CartItem>
+          ))
+        )}
+      </CartItemsWapper>
+      <PaymentFooter>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Subtotal>Zwischensumme: </Subtotal>
+          <Subtotal>{cart.netTotal.toFixed(2)} €</Subtotal>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Subtotal style={{ color: "#888888" }}>
+            {cart.tax * 100}% MwSt.:{" "}
+          </Subtotal>
+          <Subtotal style={{ color: "#888888" }}>
+            {(cart.total - cart.netTotal).toFixed(2)} €
+          </Subtotal>
+        </div>
+        {!!orderDetails.organizationName && (
+          <>
+            <div
               style={{
                 display: "flex",
                 width: "100%",
                 justifyContent: "space-between",
               }}
-          >
-            <Total>Gesamt</Total>
-            <Total>
-              Total:{" "}
-              {(cart.total - orderDetails.billedToOrganization).toFixed(2)} €
-            </Total>
-          </div>
-          <BtnCheckout onClick={() => handlePayment()}>Bezahlen</BtnCheckout>
-        </PaymentFooter>
-      </CartContainer>
+            >
+              <Discount>{orderDetails.organizationName}</Discount>
+              <Discount>
+                {orderDetails.billedToOrganization.toFixed(2)} €
+              </Discount>
+            </div>
+          </>
+        )}
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Total>Gesamt</Total>
+          <Total>
+            Total: {(cart.total - orderDetails.billedToOrganization).toFixed(2)}{" "}
+            €
+          </Total>
+        </div>
+        <BtnCheckout onClick={() => handlePayment()}>Bezahlen</BtnCheckout>
+      </PaymentFooter>
+    </CartContainer>
   );
 };
 
 export default CartPage;
-

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import styled from "styled-components";
 import Logo from "../../images/logo.png";
@@ -6,7 +6,7 @@ import Image from "next/image";
 import QRIcon from "../../images/qrcodeicon.png";
 import UserIcon from "../../images/usericon.png";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const StartWrapper = styled.div`
   display: flex;
@@ -32,6 +32,13 @@ const LogoSmall = styled.div`
   img {
     padding: 60px;
   }
+
+  @media (max-width: 800px) {
+    img {
+      padding-right: 0;
+      padding-left: 30px;
+    }
+  }
 `;
 
 const BtnBack = styled.div`
@@ -52,6 +59,11 @@ const BtnBack = styled.div`
     text-decoration: none; /* Für das a-Tag innerhalb des Containers */
     color: #000000; /* Optional, um die Textfarbe vom Eltern-Container zu erben */
   }
+
+  @media (max-width: 800px) {
+    margin-left: 20px;
+    margin-right: 30px;
+  }
 `;
 
 const IntroText = styled.h3`
@@ -70,35 +82,53 @@ const TypeWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  height: 100%;
 `;
 
 const Chooser = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  width: 800px;
+  height: calc(100% - 221px);
+  margin-top: 221px;
+  gap: 20px;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const BtnType = styled.button`
-  width: 347px;
-  height: 347px;
+  width: 300px;
+  height: 200px;
   border-radius: 5px;
   border: 0;
-  background-color: #f4f4f4;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   cursor: pointer;
+  background: white;
 `;
 
 const TypeChooserWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+
+  a {
+    background: white;
+    text-decoration: none;
+    padding: 10px;
+    padding-bottom: 20px;
+  }
+
   h4 {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 35px;
-    line-height: 48px;
+    font-size: 20px;
+    line-height: 20px;
     color: #000000;
     font-weight: bold;
     margin: 0;
@@ -109,41 +139,43 @@ const TypeChooserWrapper = styled.div`
 
 const TypePage = () => {
   const router = useRouter();
-  return <StartWrapper style={{position: "relative"}}>
-    <LogoSmall>
-      <Image src={Logo} width={260} height={122} alt="Logo"/>
-      <BtnBack onClick={() => router.push("/")}>Zurück</BtnBack>
-    </LogoSmall>
-    <TypeWrapper>
-      <IntroText>
-        Herzlich willkommen <br/> im Hungry Heads
-      </IntroText>
-      <Chooser>
-        <TypeChooserWrapper>
-          <Link href="/qr-auth">
-            <BtnType>
-              <Image src={QRIcon} height={183} alt="qr code"/>
-            </BtnType>
-            <h4>
-              Hungry Heads <br/>
-              Mitglied
-            </h4>
-          </Link>
-        </TypeChooserWrapper>
-        <TypeChooserWrapper>
-          <Link href="/menu" passHref>
-            <BtnType>
-              <Image src={UserIcon} height={151} alt="Private User"/>
-            </BtnType>
-            <h4>
-              Hungry Heads <br/>
-              Gast
-            </h4>
-          </Link>
-        </TypeChooserWrapper>
-      </Chooser>
-    </TypeWrapper>
-  </StartWrapper>
+  return (
+    <StartWrapper style={{ position: "relative" }}>
+      <LogoSmall>
+        <Image src={Logo} width={260} height={122} alt="Logo" />
+        <BtnBack onClick={() => router.push("/")}>Zurück</BtnBack>
+      </LogoSmall>
+      <TypeWrapper>
+        {/* <IntroText>
+          Herzlich willkommen <br /> im Hungry Heads
+        </IntroText> */}
+        <Chooser>
+          <TypeChooserWrapper>
+            <Link href="/qr-auth">
+              <BtnType>
+                <Image src={QRIcon} height={183} alt="qr code" />
+              </BtnType>
+              <h4>
+                Hungry Heads <br />
+                Mitglied
+              </h4>
+            </Link>
+          </TypeChooserWrapper>
+          <TypeChooserWrapper>
+            <Link href="/menu" passHref>
+              <BtnType>
+                <Image src={UserIcon} height={151} alt="Private User" />
+              </BtnType>
+              <h4>
+                Hungry Heads <br />
+                Gast
+              </h4>
+            </Link>
+          </TypeChooserWrapper>
+        </Chooser>
+      </TypeWrapper>
+    </StartWrapper>
+  );
 };
 
 export default TypePage;

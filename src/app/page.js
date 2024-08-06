@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Ginger from "../images/ginger.png";
 import { useRouter } from "next/navigation";
-import {useApi} from "@/app/context/ApiContext";
-import {useCart} from "@/app/context/CartContext";
+import { useApi } from "@/app/context/ApiContext";
+import { useCart } from "@/app/context/CartContext";
 
 const StartWrapper = styled.div`
   display: flex;
@@ -61,6 +61,29 @@ const StartWrapper = styled.div`
       background: white;
     }
   }
+
+  @media only screen and (min-width: 1350px) and (orientation: landscape) {
+    .header {
+      height: 60vh;
+    }
+
+    .startBody {
+      span {
+        font-size: 27px;
+      }
+
+      h2 {
+        font-size: 60px;
+        line-height: 60px;
+      }
+
+      button {
+        width: auto;
+        padding: 30px 100px;
+        font-size: 27px;
+      }
+    }
+  }
 `;
 
 export default function StarterPage() {
@@ -68,22 +91,22 @@ export default function StarterPage() {
   const cart = useCart();
   const api = useApi();
   useEffect(() => {
-      cart.cleanCart();
-      api.logoutUser();
+    cart.cleanCart();
+    api.logoutUser();
   }, []);
 
   return (
-      <StartWrapper>
-        <div className="header">
-          <img src={Ginger.src} />
-        </div>
-        <div className="startBody">
-          <span>Vital Bar</span>
-          <h2>
-            Was isst <br /> du heute?
-          </h2>
-          <button onClick={() => router.push("type")}>Tap to Order</button>
-        </div>
-      </StartWrapper>
+    <StartWrapper>
+      <div className="header">
+        <img src={Ginger.src} />
+      </div>
+      <div className="startBody">
+        <span>Vital Bar</span>
+        <h2>
+          Was isst <br /> du heute?
+        </h2>
+        <button onClick={() => router.push("type")}>Tap to Order</button>
+      </div>
+    </StartWrapper>
   );
 }

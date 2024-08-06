@@ -1,10 +1,10 @@
 import { Drawer } from "@mui/material";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-`import {useCart} from "@/app/context/CartContext";`
+`import {useCart} from "@/app/context/CartContext";`;
 
 const CartBody = styled.div`
   height: 80vh;
@@ -19,7 +19,8 @@ const CartBody = styled.div`
   .selectedImage {
     width: 280px;
     height: 280px;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 20px;
   }
 
   .foodName {
@@ -184,15 +185,20 @@ const Bottom = styled.div`
   }
 `;
 
-export default function CartAddItem({ open, onClose, foodItem, addToCartHandler }) {
+export default function CartAddItem({
+  open,
+  onClose,
+  foodItem,
+  addToCartHandler,
+}) {
   const [amount, setAmount] = useState(1);
 
   const increaseAmount = () => {
-    setAmount(prevState => prevState + 1);
+    setAmount((prevState) => prevState + 1);
   };
 
   const decreaseAmount = () => {
-    setAmount(prevState => prevState === 1 ? 1 : prevState - 1);
+    setAmount((prevState) => (prevState === 1 ? 1 : prevState - 1));
   };
 
   const addToCart = () => {
@@ -200,34 +206,41 @@ export default function CartAddItem({ open, onClose, foodItem, addToCartHandler 
     onClose();
   };
 
-  return <StyledDrawer open={open} onClose={onClose} anchor="bottom">
-    <CartBody>
-      <img className="selectedImage" src={foodItem.image} />
-      <h2 className="foodName">{foodItem.name}</h2>
-      <span className="description">{foodItem.description}</span>
-      <p className="price">{foodItem.price} €</p>
-      <Bottom>
-        <div className="firstBox">
-          <button className="backbutton">
-            <ArrowBackIosNewOutlinedIcon
+  return (
+    <StyledDrawer open={open} onClose={onClose} anchor="bottom">
+      <CartBody>
+        <img className="selectedImage" src={foodItem.image} />
+        <h2 className="foodName">{foodItem.name}</h2>
+        <span className="description">{foodItem.description}</span>
+        <p className="price">{foodItem.price} €</p>
+        <Bottom>
+          <div className="firstBox">
+            <button className="backbutton" onClick={onClose}>
+              <ArrowBackIosNewOutlinedIcon
                 style={{ marginRight: 5, fontSize: 20 }}
-            />
-            Back
-          </button>
-          <button className="changeAmount" onClick={decreaseAmount}>
-            <RemoveOutlinedIcon style={{ fontSize: 30 }} />
-          </button>
-          <div className="amount">{amount}</div>
-          <button className="changeAmount">
-            <AddOutlinedIcon onClick={increaseAmount} style={{ fontSize: 30 }} />
-          </button>
-          <div className="priceCalculation">
-            <span>price</span>
-            <p>{(foodItem.price * amount).toFixed(2)}€</p>
+              />
+              Zurück
+            </button>
+            <button className="changeAmount" onClick={decreaseAmount}>
+              <RemoveOutlinedIcon style={{ fontSize: 30 }} />
+            </button>
+            <div className="amount">{amount}</div>
+            <button className="changeAmount">
+              <AddOutlinedIcon
+                onClick={increaseAmount}
+                style={{ fontSize: 30 }}
+              />
+            </button>
+            <div className="priceCalculation">
+              <span>price</span>
+              <p>{(foodItem.price * amount).toFixed(2)}€</p>
+            </div>
           </div>
-        </div>
-        <button className="addToCart" onClick={addToCart}>Add to Cart</button>
-      </Bottom>
-    </CartBody>
-  </StyledDrawer>;
+          <button className="addToCart" onClick={addToCart}>
+            Add to Cart
+          </button>
+        </Bottom>
+      </CartBody>
+    </StyledDrawer>
+  );
 }

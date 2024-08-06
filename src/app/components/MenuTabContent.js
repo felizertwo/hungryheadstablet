@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import CheckIcon from "../../images/check.png";
 import PlusIcon from "../../images/plus.png";
-import Image from 'next/image';
+import Image from "next/image";
 
 const CircleBtn = styled.div`
   background: ${(props) => (props.added ? "#19A400" : "#c86a61")};
@@ -26,8 +26,6 @@ const MenuBody = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
-  overflow-y: auto;
-  overflow-x: hidden;
   box-sizing: border-box;
 `;
 
@@ -39,9 +37,9 @@ const SingleMenu = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 50%;
 
   .imageBox {
-    background: white;
     width: 100%;
     display: flex;
     align-items: center;
@@ -51,13 +49,15 @@ const SingleMenu = styled.div`
     margin-bottom: 20px;
 
     img {
-      position: absolute; /* Position image absolutely within the container */
-      width: 45%;
-      object-fit: contain;
-      max-height: 100%; /* Ensure image doesn't exceed its container */
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      max-height: 100%;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%); /* Center image */
+      border-radius: 20px;
+      transform: translate(-50%, -50%);
     }
   }
 
@@ -85,26 +85,32 @@ const SingleMenu = styled.div`
   }
 `;
 
-export function MenuTabContent({tabItems, selectItemHandler, addedItems}) {
-    return  <MenuBody>{tabItems.map((item, index) => {
-        const added = addedItems.includes(item.id)
+export function MenuTabContent({ tabItems, selectItemHandler, addedItems }) {
+  return (
+    <MenuBody>
+      {tabItems.map((item, index) => {
+        const added = addedItems.includes(item.id);
         return (
-
-            <SingleMenu key={item.category_id + "." + index} onClick={() => selectItemHandler(item)}>
-                <div className="imageBox">
-                    <img src={item.image} alt={item.name}/>
-                </div>
-                <p>{item.name}</p>
-                <span>{item.price}€</span>
-                <CircleBtn added={added ? "added" :  undefined}>
-                    <Image
-                        src={added ? CheckIcon : PlusIcon}
-                        alt={added ? "Added" : "Add"}
-                        width={30}
-                        height={30}
-                    />
-                </CircleBtn>
-            </SingleMenu>
+          <SingleMenu
+            key={item.category_id + "." + index}
+            onClick={() => selectItemHandler(item)}
+          >
+            <div className="imageBox">
+              <img src={item.image} alt={item.name} />
+            </div>
+            <p>{item.name}</p>
+            <span>{item.price}€</span>
+            <CircleBtn added={added ? "added" : undefined}>
+              <Image
+                src={added ? CheckIcon : PlusIcon}
+                alt={added ? "Added" : "Add"}
+                width={30}
+                height={30}
+              />
+            </CircleBtn>
+          </SingleMenu>
         );
-    })}</MenuBody>;
+      })}
+    </MenuBody>
+  );
 }
