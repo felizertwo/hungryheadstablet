@@ -1,0 +1,15 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "rewrites": [
+      {
+        "source": "/cordova/(.*)",
+        "has": [
+          {
+            "type": "host",
+            "value": ".*android.*"
+          }
+        ],
+        "destination": "/cordova_platforms/android/$1"
+      }
+    ]
+  }
