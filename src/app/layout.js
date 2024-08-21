@@ -11,6 +11,11 @@ import styled from "styled-components";
 import InactivityRedirect from "@/app/components/InactivityRedirect";
 import TabletErrorBoundary from "@/app/components/ErrorBoundary";
 
+const cordovaUrl =
+  process.env.NODE_ENV === "development"
+    ? "/cordova_platforms/browser/cordova.js"
+    : "/cordova_platforms/android/cordova.js";
+
 const inter = Inter({ subsets: ["latin"] });
 
 const Wrapper = styled.div`
