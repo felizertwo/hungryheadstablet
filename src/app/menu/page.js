@@ -188,13 +188,11 @@ export default function MenuPage() {
               addedItems={addedItems}
             />
           ),
-          image: category.image,
+          image: process.env.NEXT_PUBLIC_IMAGE_BANK_URL + "/" + category.image,
         };
       })
     );
   }, [foodItems, cart.cartItems]);
-
-  console.log(foodItems);
 
   return (
     <MenuWrapper>

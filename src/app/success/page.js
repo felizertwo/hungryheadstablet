@@ -69,7 +69,10 @@ const SuccessPage = () => {
     connectToPrinter();
   }, []);
   const router = useRouter();
-  const { amount, currency, title } = useSearchParams();
+  const searchParams = useSearchParams();
+  const amount = searchParams.get('amount');
+  const currency = searchParams.get('currency');
+  const title = searchParams.get('title');
 
   const handlePrint = async () => {
     const base64Image =

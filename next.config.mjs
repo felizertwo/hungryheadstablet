@@ -6,7 +6,11 @@ const nextConfig = {
         },
             {
                 hostname: 'hungryheads-assets-test.fra1.digitaloceanspaces.com',
-            }],
+            },
+            {
+                hostname: 'https://hungryheads-production-files.fra1.digitaloceanspaces.com'
+            }
+            ],
     },
 };
 
